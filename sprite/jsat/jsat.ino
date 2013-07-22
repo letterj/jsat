@@ -80,7 +80,7 @@ void loop() {
   if(heading < 0) heading += 2*PI;
   if(heading > 2*PI) heading -= 2*PI;
   heading = heading*(180/PI);
-  Serial.println(heading);
+  Serial.println(int(heading));
 
   delay(250);
   
