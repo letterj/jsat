@@ -50,41 +50,41 @@ void setup() {
 }
 
 void loop() {
-  Serial.println("Starting .....\n");
   
-  for(int i = 0; i < 4; i = i + 1) {
-    digitalWrite(5, HIGH);   // set the LED on
-    delay(500);
-    digitalWrite(5, LOW);    // set the LED off
-    delay(250);
-  }
+  // g_str    Greeting string
+  // h_str    Heading string
+  // c_str    Compass string
   
-  Serial.println("Sending: Hi J");
-  radio.transmit("Hi j",4);
-  delay(100);  
-
-  Serial.print("Gyro: ");
-  AngularVelocity w = gyro.read();
-  Serial.print("x: ");
-  Serial.print(w.x);
-  Serial.print("    y:");
-  Serial.print(w.y);
-  Serial.print("    z: ");
-  Serial.println(w.z);
-  delay(250);
+  Serial.println("\nStarting .....\n");
   
-  Serial.print("Heading: ");
+  char g_str[5];
+  sprintf(g_str,"Hi J"); 
+  //g_str[4] = '\n';
+  Serial.println(g_str);
+  radio.transmit(g_str,4);
+  
   MagneticField b = mag.read();
+  // nnn
   float heading = atan2(b.y, b.x);
   heading += declination;
   if(heading < 0) heading += 2*PI;
   if(heading > 2*PI) heading -= 2*PI;
   heading = heading*(180/PI);
-  Serial.println(int(heading));
-
-  delay(250);
+  char h_str[5];
+  sprintf(h_str,"%3i",int(heading));
+  //h_str[3] = '\n';
+  Serial.println(h_str);
+  radio.transmit(h_str, 4);
   
-  Serial.println("Ending .....\n");
-  delay(500);
+  AngularVelocity w = gyro.read();
+  // x:nnnn y:nnnn z:nnnn
+  char c_str[21];
+  sprintf(c_str,"x:%3i y:%3i z:%3i", int(w.x), int(w.y), int(w.z));
+  //c_str[20] = '\n'; 
+  Serial.println(c_str);
+  radio.transmit(c_str, 20);
+  
+  Serial.println("\nEnding .....\n");
+  delay(250);
 }
 
