@@ -1,11 +1,9 @@
-
 /*
 Kickstat letterj
  */
 
 
 #include <SpriteMag.h>
-#include <SpriteGyro.h>
 #include <SpriteRadio.h>
 
 static unsigned char prn2[80] = {
